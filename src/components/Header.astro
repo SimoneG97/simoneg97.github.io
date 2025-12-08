@@ -1,0 +1,58 @@
+---
+import ThemeToggle from "./ThemeToggle.astro";
+
+const { title = "Simone Galante - Portfolio" } = Astro.props;
+
+const tools = [
+  {name: "Coming soon!", path: "/"},
+  {name: "Coming soon!", path: "/"},
+];
+---
+
+<header class="navbar bg-base-200 shadow-sm z-10">
+  <div class="navbar-start">
+    <div class="dropdown">
+      <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /> </svg>
+      </div>
+      <ul
+        tabindex="-1"
+        class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+        <li><a href="/">Home</a></li>
+        <li>
+          <a>Work in progress!</a> <!-- Tools -->
+          <ul class="p-2">
+            {
+              tools.map((tool) => (
+                <li><a href={tool.path}>{tool.name}</a></li>
+              ))
+            }
+          </ul>
+        </li>
+      <li><a>Work in progress!</a></li> <!-- Bits & Facts -->
+      </ul>
+    </div>
+    <div class="text-xl font-semibold m-2">{title}</div>
+  </div>
+  <div class="navbar-center hidden lg:flex">
+    <ul class="menu menu-horizontal px-1">
+      <li><a href="/">Home</a></li>
+      <li>
+        <details>
+          <summary>Work in progress!</summary> <!-- Tools -->
+          <ul class="p-2 bg-base-100 w-40 z-1">
+            {
+              tools.map((tool) => (
+                <li><a href={tool.path}>{tool.name}</a></li>
+              ))
+            }
+          </ul>
+        </details>
+      </li>
+      <li><a>Work in progress!</a></li> <!-- Bits & Facts -->
+    </ul>
+  </div>
+  <div class="navbar-end">
+    <ThemeToggle />
+  </div>
+</header>

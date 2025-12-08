@@ -1,0 +1,26 @@
+---
+import me from '../../public/me.jpg';
+import { Image } from 'astro:assets';
+---
+
+<div class="card bg-base-100 w-65 lg:w-65 xl:w-80 2xl:w-90 shadow-sm">
+  <figure>
+    <Image src={me} alt="Me!" />
+  </figure>
+  <div class="card-body">
+    <h2 class="card-title">About me</h2>
+    <p class="text-md">
+      Hello there, I'm Simone Galante, a passionate and curious developer with experience in
+      building backend applications especially focusing on performance optimization.<br>
+      Feel free to explore my bio, tools and bits for more information!
+    </p>
+    <div class="card-actions justify-end relative top-2">
+      <button class="btn btn-outline btn-md">
+        Get CV
+      </button>
+      <a role="button" class="btn btn-outline btn-md" href="mailto:simoneg.work@gmail.com">
+        Contact me
+      </a>
+    </div>
+  </div>
+</div>

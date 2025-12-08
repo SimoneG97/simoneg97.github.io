@@ -1,0 +1,28 @@
+---
+import UpArrow from '../../public/up_arrow.svg';
+---
+
+<div tabindex="0" role="button" class="fab sticky mb-4 mr-4">
+  <a href="#start" role="button" class="btn btn-xl btn-circle btn-outline tooltip tooltip-left bg-radial from-base-100 to-gray-500" data-tip="Go back top!">
+    <UpArrow width={20} height={20} class="themed-svg z-20" />
+  </a>
+</div>
+
+<style>
+  @keyframes show-hide-FAB {
+    from { transform: scale(0%); opacity: 0; }
+    to   { transform: scale(100%); opacity: 1; }
+  }
+
+  div {
+    display: flex;
+    margin-top: -4.2rem;
+    z-index: 100;
+  }
+
+  a {
+    animation: show-hide-FAB;
+    animation-timeline: scroll();
+    animation-range: 0% 15%;
+  }
+</style>

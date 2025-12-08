@@ -1,0 +1,35 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default, dark --prefers-dark;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: thin;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* SVG Theme */
+svg.themed-svg path { 
+  fill: var(--color-base-content);
+}
+
+/*
+h1 { @apply text-3xl font-mono font-bold     mb-1 mt-1; }
+h2 { @apply text-xl  font-mono font-semibold mb-1 mt-1; }
+h3 { @apply text-lg  font-mono font-semibold mb-1 mt-1; }
+h3 { @apply          font-mono font-semibold mb-1 mt-1; }
+h5 { @apply text-sm  font-mono font-semibold mb-1 mt-1; }
+h6 { @apply text-xs  font-mono font-semibold mb-1 mt-1; }
+hr { 
+  border: none;
+  @apply divider divider-horizontal divide-gray-500;
+}
+*/

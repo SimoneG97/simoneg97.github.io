@@ -1,0 +1,23 @@
+{
+  "name": "my-portfolio",
+  "author": {
+    "name": "Simone Galante",
+    "email": "simoneg.work@gmail.com",
+    "url": "https://simoneg97.github.io"
+  },
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/ts-plugin": "^1.10.6",
+    "@tailwindcss/vite": "^4.1.17",
+    "astro": "^5.16.4",
+    "daisyui": "^5.5.8",
+    "tailwindcss": "^4.1.17"
+  }
+}

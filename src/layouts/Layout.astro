@@ -1,0 +1,31 @@
+---
+import "../assets/app.css";
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import TopFAB from "../components/TopFAB.astro";
+
+const { title = "Simone Galante - Portfolio" } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="me" href="https://mastodon.online/@xzoppy" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<a id="start"/>
+	<body>
+	<div class="flex-col grow">
+		<Header />
+		<div id="content" class="flex grow w-full items-start pt-1">
+			<slot />
+		</div>
+		<TopFAB />
+		<Footer />
+	</div>
+	</body>
+</html>
