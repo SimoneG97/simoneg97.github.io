@@ -14,82 +14,84 @@ const studies = [
 ---
 
 <Layout>
-  <aside class="sticky top-3 left-2.5">
-    <MyCard class="pt-3" />
-  </aside>
-  <div class="divider divider-horizontal divide-gray-500"></div>
-  <div class="p-5 pt-1 w-dvw min-w-lg">
-    <div class="text-4xl m-2">Jobs</div>
-    {
-      jobs.map((job) => (
-        <details class="collapse collapse-arrow bg-base-100 border border-base-300">
-          <summary class="collapse-title font-semibold flex">
-            <div class="grow">
-              {job.data.company}
-              <span class="text-rotate">
-                <span>
-                {
-                  [
-                    ...job.data.languages, ...job.data.platforms, ...job.data.dbms,
-                    ...job.data.frameworks_and_libraries, ...job.data.other_technologies
-                  ].map((tech) => (
-                    <span class="badge badge-soft ml-4 pl-1 pr-1">{tech}</span>
-                  ))
-                }
-                </span>
-              </span>
-            </div>
-            {
-              job.data.to == "Current!" ?
-              <div class="mr-4 text-success">From: {job.data.from}</div>
-              <div class="ml-4 text-success">To: {job.data.to}</div>
-              :
-              <div class="mr-4 text-warning">From: {job.data.from}</div>
-              <div class="ml-4 text-warning">To: {job.data.to}</div>
-            }
-          </summary>
-          <div class="collapse-content text-sm">
-          <div class="text-xl m-1">Technologies used</div>
-            {
-              [
-                ...job.data.languages, ...job.data.platforms, ...job.data.dbms,
-                ...job.data.frameworks_and_libraries, ...job.data.other_technologies
-              ].map((tech) => (
-                <div class="badge badge-outline m-0.5">{tech}</div>
-              ))
-            }
-            <br><br>
-            <Job data={job} />
-          </div>
-        </details>
-      ))
-    }
-    <div class="divider"></div>
-    <div class="text-4xl m-2">Studies</div>
-    <ul class="list bg-base-100 rounded-box shadow-md">
+  <div id="content" class="flex grow w-full min-h-[84.3dvh] items-start pt-1">
+    <aside class="sticky top-3 left-2.5">
+      <MyCard class="pt-3" />
+    </aside>
+    <div class="divider divider-horizontal divide-gray-500"></div>
+    <div class="p-5 pt-1 w-dvw">
+      <div class="text-4xl m-2">Jobs</div>
       {
-        studies.map((study) => (
-          <li class="list-row">
-            <div>
-              <div>{study.institute}</div>
-              <div class="text-xs uppercase font-semibold opacity-60">{study.title}</div>
-              <div class="text-xs uppercase opacity-60">{study.when}</div>
+        jobs.map((job) => (
+          <details class="collapse collapse-arrow bg-base-100 border border-base-300">
+            <summary class="collapse-title font-semibold flex">
+              <div class="grow">
+                {job.data.company}
+                <span class="text-rotate">
+                  <span>
+                  {
+                    [
+                      ...job.data.languages, ...job.data.platforms, ...job.data.dbms,
+                      ...job.data.frameworks_and_libraries, ...job.data.other_technologies
+                    ].map((tech) => (
+                      <span class="badge badge-soft ml-4 pl-1 pr-1">{tech}</span>
+                    ))
+                  }
+                  </span>
+                </span>
+              </div>
+              {
+                job.data.to == "Current!" ?
+                <div class="mr-4 text-success">From: {job.data.from}</div>
+                <div class="ml-4 text-success">To: {job.data.to}</div>
+                :
+                <div class="mr-4 text-warning">From: {job.data.from}</div>
+                <div class="ml-4 text-warning">To: {job.data.to}</div>
+              }
+            </summary>
+            <div class="collapse-content text-sm">
+            <div class="text-xl m-1">Technologies used</div>
+              {
+                [
+                  ...job.data.languages, ...job.data.platforms, ...job.data.dbms,
+                  ...job.data.frameworks_and_libraries, ...job.data.other_technologies
+                ].map((tech) => (
+                  <div class="badge badge-outline m-0.5">{tech}</div>
+                ))
+              }
+              <br><br>
+              <Job data={job} />
             </div>
-            
-            <div class="text-xl mt-2">{study.field}</div>
-            {
-              study.thesis &&
-              <a role="button" class="btn btn-outline btn-md mr-8" target="_blank" rel="noopener noreferrer" href={study.thesis}>Thesis here!</a>
-            }
-            <div>
-              <div class="text-xs uppercase opacity-60">Final score</div>
-              <div class="text-xl mt-1 mr-10">{study.grade}</div>
-            </div>
-          </li>
+          </details>
         ))
       }
-    </ul>
-    <div class="spacer min-h-16">{/* Spacer to avoid overlapping content and FAB */}</div>
+      <div class="divider"></div>
+      <div class="text-4xl m-2">Studies</div>
+      <ul class="list bg-base-100 rounded-box shadow-md">
+        {
+          studies.map((study) => (
+            <li class="list-row">
+              <div>
+                <div>{study.institute}</div>
+                <div class="text-xs uppercase font-semibold opacity-60">{study.title}</div>
+                <div class="text-xs uppercase opacity-60">{study.when}</div>
+              </div>
+              
+              <div class="text-xl mt-2">{study.field}</div>
+              {
+                study.thesis &&
+                <a role="button" class="btn btn-outline btn-md mr-8" target="_blank" rel="noopener noreferrer" href={study.thesis}>Thesis here!</a>
+              }
+              <div>
+                <div class="text-xs uppercase opacity-60">Final score</div>
+                <div class="text-xl mt-1 mr-10">{study.grade}</div>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+      <div class="spacer min-h-16">{/* Spacer to avoid overlapping content and FAB */}</div>
+    </div>
   </div>
 </Layout>
 

@@ -19,11 +19,9 @@ const { title = "Simone Galante - Portfolio" } = Astro.props;
 	</head>
 	<a id="start"/>
 	<body>
-	<div class="flex-col grow">
+	<div class="flex-col grow h-screen w-screen">
 		<Header />
-		<div id="content" class="flex grow w-full items-start pt-1">
-			<slot />
-		</div>
+		<slot />
 		<TopFAB />
 		<Footer />
 	</div>

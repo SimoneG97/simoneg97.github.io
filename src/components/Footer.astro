@@ -9,7 +9,7 @@ const astro_url    = "https://astro.build";
 const daisyui_url  = "https://daisyui.com";
 ---
 
-<footer class="footer sm:footer-horizontal bg-base-200 text-neutral-content bottom-0 z-10 p-4">
+<footer class="footer sm:footer-horizontal bg-base-200 text-neutral-content bottom-0 z-10 p-4 flex-none">
   <aside>
     <MyLogo class="themed-svg" width={60} height={60} />
   </aside>
@@ -27,8 +27,8 @@ const daisyui_url  = "https://daisyui.com";
   <nav>
     <h6 class="footer-title text-base-content">Made with (and thanks to!)</h6>
     <div class="grid grid-flow-col gap-4">
-      <a target="_blank" rel="noopener noreferrer" class="link link-hover" href={astro_url}>Astro</a>
-      <a target="_blank" rel="noopener noreferrer" class="link link-hover" href={daisyui_url}>DaisyUI</a>
+      <a target="_blank" rel="noopener noreferrer" class="link link-hover text-base-content" href={astro_url}>Astro</a>
+      <a target="_blank" rel="noopener noreferrer" class="link link-hover text-base-content" href={daisyui_url}>DaisyUI</a>
     </div>
   </nav>
 </footer>
