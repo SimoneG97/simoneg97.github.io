@@ -1,7 +1,7 @@
 <?xml version="1.0" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
  "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
-<svg version="1.0" xmlns="http://www.w3.org/2000/svg"
+<svg id="logo" version="1.0" xmlns="http://www.w3.org/2000/svg"
  width="60" height="60" viewBox="0 0 1080.000000 1080.000000"
  preserveAspectRatio="xMidYMid meet" class="fill-current">
  
@@ -29,9 +29,9 @@
     </g>
 
     <style>
-        path { fill: black; }
+        svg#logo path { fill: var(black); }
         @media (prefers-color-scheme: dark) {
-            path { fill: white; }
+            svg#logo path { fill: white; }
         }
     </style>
 </svg>

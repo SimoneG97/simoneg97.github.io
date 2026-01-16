@@ -22,5 +22,5 @@ html {
 
 /* SVG Theme */
 svg.themed-svg path { 
-  fill: var(--color-base-content);
+  fill: var(--color-base-content) !important;
 }
