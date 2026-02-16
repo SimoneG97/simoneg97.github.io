@@ -16,7 +16,7 @@
   "dependencies": {
     "@astrojs/ts-plugin": "^1.10.6",
     "@tailwindcss/vite": "^4.1.17",
-    "astro": "^5.16.4",
+    "astro": "^5.17.2",
     "daisyui": "^5.5.8",
     "tailwindcss": "^4.1.17"
   }

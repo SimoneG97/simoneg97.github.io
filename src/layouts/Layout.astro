@@ -21,7 +21,9 @@ const { title = "Simone Galante - Portfolio" } = Astro.props;
 	<body>
 	<div class="flex flex-col h-screen w-screen min-w-sm">
 		<Header />
-		<slot />
+		<div id="content" class="flex flex-col justify-center items-center lg:flex-row lg:items-start grow w-full p-4">
+			<slot />
+		</div>
 		<TopFAB />
 		<Footer />
 	</div>
