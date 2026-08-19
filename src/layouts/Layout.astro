@@ -1,31 +1,39 @@
 ---
 import "../assets/app.css";
-import Header from '../components/Header.astro';
-import Footer from '../components/Footer.astro';
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
 import TopFAB from "../components/TopFAB.astro";
+
+Astro.response.headers.set("Cross-Origin-Opener-Policy", "same-origin");
+Astro.response.headers.set("Cross-Origin-Embedder-Policy", "credentialless");
 
 const { title = "Simone Galante - Portfolio" } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="me" href="https://mastodon.online/@xzoppy" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<a id="start"/>
-	<body>
-	<div class="flex flex-col h-screen w-screen min-w-sm">
-		<Header />
-		<div id="content" class="flex flex-col justify-center items-center lg:flex-row lg:items-start grow w-full p-4">
-			<slot />
-		</div>
-		<TopFAB />
-		<Footer />
-	</div>
-	</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="me" href="https://mastodon.online/@xzoppy" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
+    </head>
+    <a id="start"></a>
+    <body>
+        <div class="flex flex-col h-screen w-screen min-w-sm">
+            <Header />
+            <div
+                id="content"
+                class="flex flex-col justify-center items-center lg:flex-row lg:items-start grow w-full p-4"
+            >
+                <slot />
+            </div>
+            <TopFAB />
+            <Footer />
+        </div>
+    </body>
+
+
 </html>

@@ -1,0 +1,198 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const workerURL = `${Astro.url.origin}/fibonacci.js`;
+const fibonacciMethods = new Map([
+  ["Perfect Square", "p_square"],
+  ["Iterative", "iterative"],
+  ["Recursive", "recursive"],
+])
+
+// The answer is here -> https://www.desmos.com/calculator/xzlnu5xmjp
+// This is only valid for perfect square formula, because the other methods do not have a square operation
+const MAX_SAFE_INTEGER_FOR_PERFECT_SQUARE = 4.028142e15
+---
+
+<Layout title="Fibonacci Checker">
+    <div class="hero bg-base-200 min-h-full">
+        <div class="hero-content text-center md:flex-row flex-col">
+            <div class="max-w-md">
+                <h1 class="text-5xl font-bold">Fibonacci Checker</h1>
+                <p class="pt-6">
+                    Most of the times you find how to calculate the Nth
+                    fibonacci number...
+                </p>
+                <p>
+                    ...But what if I want to check if a number I picked is in
+                    the fibonacci series?
+                </p>
+                <p class="pb-6">
+                    Try it out!
+                </p>
+                <input
+                    id="fibonacci_input"
+                    type="number"
+                    class="input validator join-item"
+                    required
+                    placeholder="Insert a number"
+                    min="1"
+                    max={MAX_SAFE_INTEGER_FOR_PERFECT_SQUARE}
+                    data-max={MAX_SAFE_INTEGER_FOR_PERFECT_SQUARE}
+                    title="Insert a number"
+                />
+                <button
+                    id="fibonacci_button"
+                    class="btn btn-neutral join-item"
+                    data-worker={workerURL}
+                >
+                    Go!
+                </button>
+                <p class="validator-hint">Must be greater than 1 and less than {MAX_SAFE_INTEGER_FOR_PERFECT_SQUARE}</p>
+            </div>
+            <div class="divider divider-vertical md:divider-horizontal"></div>
+            <div class="card bg-base-100 w-lg shadow-sm">
+                <div class="card-body">
+                    <h2 class="card-title pb-4">Computation results
+                        <span id="verdict" class="-m-1.5 ml-24"></span>
+                    </h2>
+
+                    {
+                      fibonacciMethods.entries().map((e) =>
+                        <div class="stats shadow">
+                            <div class="stat">
+                                <div class="text-xl">{e[0]}</div>
+                                <div class="flex justify-center items-center">
+                                    <div id={e[1]} class="stat-value">- ms</div>
+                                </div>
+                            </div>
+                        </div>
+                      )
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        type ComputationMode = "Recursive" | "Iterative" | "Perfect Square";
+        type ComputationResult = {
+            mode: ComputationMode | null;
+            timeElapsed: number;
+            verdict: boolean | null;
+        };
+        const fibonacciInput = document.getElementById("fibonacci_input") as HTMLInputElement;
+        const MAX_SAFE_INTEGER_FOR_PERFECT_SQUARE = Number.parseInt(fibonacciInput.getAttribute("data-max")!!);
+        const fibonacciButton = document.getElementById("fibonacci_button") as HTMLButtonElement;
+        const verdictElem = document.getElementById("verdict")!;
+        const pSquareResult = document.getElementById("p_square") as HTMLElement;
+        const iterativeResult = document.getElementById("iterative") as HTMLElement;
+        const recursiveResult = document.getElementById("recursive") as HTMLElement;
+        const allResultElements = new Map([
+            ["Perfect Square", pSquareResult],
+            ["Iterative", iterativeResult],
+            ["Recursive", recursiveResult],
+        ]);
+
+        let results: Map<ComputationMode, ComputationResult> = new Map();
+
+        const res = await fetch(new URL(fibonacciButton.getAttribute("data-worker")!!));
+        const text = await res.text();
+        const blob = new Blob([text], { type: "application/javascript" });
+        const url = URL.createObjectURL(blob);
+        
+        
+        let timerId: number = 0;
+        const computationCompleted = (workers: Worker[]) => setTimeout(() => {
+            workers.forEach((w) => w.terminate());
+            let timeoutPlaceholder: ComputationResult = {
+                verdict: null,
+                timeElapsed: NaN,
+                mode: null,
+            };
+
+            results.getOrInsert("Perfect Square", {
+                ...timeoutPlaceholder,
+                mode: "Perfect Square",
+            });
+            results.getOrInsert("Iterative", {
+                ...timeoutPlaceholder,
+                mode: "Iterative",
+            });
+            results.getOrInsert("Recursive", {
+                ...timeoutPlaceholder,
+                mode: "Recursive",
+            });
+
+            console.table(results);
+            for (const [_, r] of results) updateResults(r);
+            fibonacciButton.disabled = false;
+        }, 3000);
+
+        const updateResults = (r: ComputationResult) => {
+            results.set(r.mode!!, r);
+            let elem = allResultElements.get(r.mode!!)!!;
+            elem.classList.remove("loading", "loading-xl");
+
+            if (r.verdict == null || Number.isNaN(r.timeElapsed)) {
+                elem.textContent = `TIMEOUT`;
+                elem.classList.add("text-error");
+            } else {
+                elem.textContent = `${r.timeElapsed} ms`;
+                elem.classList.add(r.verdict ? "text-success" : "text-error");
+            }
+            
+            if (verdictElem.textContent.length == 0) {
+              if (r.verdict) {
+                verdictElem.textContent = "It's Fibonacci!"
+                verdictElem.classList.add("text-success");
+              } else {
+                verdictElem.textContent = "It's NOT Fibonacci!"
+                verdictElem.classList.add("text-error");
+              }
+            }
+            
+            if (allResultElements.entries().every(e =>
+              e[1].classList.contains("text-success") ||
+              e[1].classList.contains("text-error")
+            )) {
+              clearTimeout(timerId);
+              fibonacciButton.disabled = false;
+            }
+        };
+
+        fibonacciButton.addEventListener("click", () => {
+            const input = Number.parseInt(fibonacciInput.value);
+            if (Number.isNaN(input) || input > MAX_SAFE_INTEGER_FOR_PERFECT_SQUARE) return;
+            fibonacciButton.disabled = true;
+            const workers: Worker[] = [...Array(3)].map((_) => {
+                const result = new Worker(url);
+                result.onmessage = (e: MessageEvent<ComputationResult>) =>
+                    updateResults(e.data);
+                result.onerror = console.error;
+                return result;
+            });
+
+            workers[0].postMessage({
+                mode: "Recursive",
+                value: input,
+            });
+            workers[1].postMessage({
+                mode: "Iterative",
+                value: input,
+            });
+            workers[2].postMessage({
+                mode: "Perfect Square",
+                value: input,
+            });
+
+            allResultElements.forEach((e) => {
+                e.classList.add("loading", "loading-xl");
+                e.classList.remove("text-error", "text-success");
+            });
+            verdictElem.textContent = "";
+            verdictElem.classList.remove("text-error", "text-success");
+
+            timerId = computationCompleted(workers);
+        });
+    </script>
+</Layout>
