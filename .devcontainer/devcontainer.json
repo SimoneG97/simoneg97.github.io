@@ -2,5 +2,10 @@
   "name": "my-portfolio-devenv",
   "image": "mcr.microsoft.com/devcontainers/javascript-node:24-bullseye",
   "postCreateCommand": "npm install",
-  "forwardPorts": [4321]
+  "forwardPorts": [4321],
+  "runArgs": [
+      "--rm",
+      "--network=host",
+      "--name", "portfolio"
+  ],
 }
