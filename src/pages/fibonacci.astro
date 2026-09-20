@@ -164,6 +164,7 @@ const MAX_SAFE_INTEGER_FOR_PERFECT_SQUARE = 4.028142e15
             const input = Number.parseInt(fibonacciInput.value);
             if (Number.isNaN(input) || input > MAX_SAFE_INTEGER_FOR_PERFECT_SQUARE) return;
             fibonacciButton.disabled = true;
+            results.clear();
             const workers: Worker[] = [...Array(3)].map((_) => {
                 const result = new Worker(url);
                 result.onmessage = (e: MessageEvent<ComputationResult>) =>
